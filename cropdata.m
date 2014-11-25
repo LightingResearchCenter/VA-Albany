@@ -7,22 +7,33 @@ function cropdata
 [githubDir,~,~] = fileparts(pwd);
 
 % Construct repo paths
-cdfPath         = fullfile(githubDir,'LRC-CDFtoolkit');
-phasorPath      = fullfile(githubDir,'PhasorAnalysis');
-sleepPath       = fullfile(githubDir,'DaysimeterSleepAlgorithm');
-daysigramPath   = fullfile(githubDir,'DaysigramReport');
-lightHealthPath = fullfile(githubDir,'LHIReport');
-croppingPath    = fullfile(githubDir,'DaysimeterCropToolkit');
-dfaPath         = fullfile(githubDir,'DetrendedFluctuationAnalysis');
+circadianPath = fullfile(githubDir,'circadian');
 
 % Enable repos
-addpath(cdfPath,phasorPath,sleepPath,daysigramPath,lightHealthPath,croppingPath,dfaPath);
+addpath(circadianPath);
+
+% Import daysimeter12
+import daysimeter12.*
 
 % Construct project paths
 Paths = initializepaths;
 
-% Perform cropping
-cropping(Paths.originalData,Paths.editedData,Paths.logs);
+% Find CDFs in folder
+filterSpec = [Paths.originalData,filesep,'*.cdf'];
+dialogTitle = 'Select the files to crop.';
+[fileNames,containingDir,filterIndex] = uigetfile(filterSpec,dialogTitle,'MultiSelect','on');
+nFile = numel(fileNames);
+
+for i1 = 1:nFile
+    % New File set up
+    cdfPath = fullfile(containingDir,fileNames{i1});
+    [~,cdfName,cdfExt] = fileparts(cdfPath);
+    newName = [cdfName,cdfExt];
+    newPath = fullfile(Paths.editedData,newName);
+    % Perform cropping
+    cropcdf(cdfPath,newPath,Paths.logs)
+end
+
 
 end
 
