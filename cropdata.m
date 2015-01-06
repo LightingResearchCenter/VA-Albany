@@ -31,9 +31,10 @@ for i1 = 1:nFile
     newName = [cdfName,cdfExt];
     newPath = fullfile(Paths.editedData,newName);
     % Perform cropping
-    cropcdf(cdfPath,newPath,Paths.logs)
+    daysimeter12.cropcdf(cdfPath,newPath,Paths.logs)
 end
 
+close all;
 
 end
 
