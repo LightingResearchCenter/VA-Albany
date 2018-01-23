@@ -22,8 +22,12 @@ Paths = initializepaths;
 filterSpec = [Paths.originalData,filesep,'*.cdf'];
 dialogTitle = 'Select the files to crop.';
 [fileNames,containingDir,filterIndex] = uigetfile(filterSpec,dialogTitle,'MultiSelect','on');
-nFile = numel(fileNames);
 
+if ~iscell(fileNames)
+    fileNames = {fileNames};
+end
+
+nFile = numel(fileNames);
 for i1 = 1:nFile
     % New File set up
     cdfPath = fullfile(containingDir,fileNames{i1});

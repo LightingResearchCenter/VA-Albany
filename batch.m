@@ -87,7 +87,7 @@ activity = activity(displayIdx);
 
 sheetTitle  = ['VA-Albany, Subject: ',subject];
 fileID      = ['daysigram_subject',subject];
-reports.daysigram.daysigram(sheetTitle,time,masks,...
+reports.daysigram.daysigram(2,sheetTitle,time,masks,...
     activity,cs,'cs',[0,1],10,Paths.plots,fileID);
 
 clf;
